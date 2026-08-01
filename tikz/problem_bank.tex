@@ -1,0 +1,56 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usetikzlibrary{positioning}
+\input{semantic_styles.tex}
+
+\begin{document}
+\begin{tikzpicture}
+  \node[bank card,text width=64mm,anchor=north west] (r1) at (0,0) {
+    {\sffamily\large\bfseries R1 · relocate an object}\\[2mm]
+    {\sffamily\scriptsize\bfseries Parameters}\quad
+    $E=\text{object},\ d=\text{carrier}$\\[2mm]
+    \textbf{Problem}\quad
+    Initial: $E$ at $*_1$\quad Goal: $E$ at $*_2$\\[2mm]
+    \textcolor{operationTeal}{\textbf{linear decomposition}}\\
+    1. $E$ at $*_1$\\
+    2. $d$ at $*_1$\\
+    3. $E$ in $d$\\
+    4. $E$ at $*_2$
+  };
+
+  \node[bank card,text width=82mm,anchor=north west] (p6) at (7.4,0) {
+    {\sffamily\large\bfseries P6 · move an object with a carrier}\\[2mm]
+    {\sffamily\scriptsize\bfseries Parameters}\quad
+    $E=\text{object},\ V=\text{carrier}$\\[2mm]
+    \textbf{Problem}\quad
+    Initial: $L_E=*_1$\quad Goal: $L_E=*_2$\\[2mm]
+    \textcolor{operationTeal}{\textbf{linear decomposition}}\\
+    1. $L_E=*_1$\\
+    2. $L_E=*_1;\ L_V=L_E$\\
+    3. $L_E=*_1;\ L_V=L_E;\ V$ connected to $E$\\
+    4. $L_E=*_1;\ L_V=L_E;\ V$ connected to $E$; safety check\\
+    5. $L_E=*_2$\\[2mm]
+    \textcolor{operationTeal}{\textbf{resolution}}\\
+    Source: state 4\\
+    Action: $V$ moves $E$ from $*_1$ to $*_2$\\
+    Target: state 5
+  };
+
+  \node[bank card,text width=70mm,anchor=north west] (p8) at (16.6,0) {
+    {\sffamily\large\bfseries P8 · close a vehicle's doors}\\[2mm]
+    {\sffamily\scriptsize\bfseries Parameters}\quad
+    $V=\text{mover},\ d=\text{vehicle}$\\[2mm]
+    \textbf{Problem}\quad
+    Initial: $d$'s doors open\quad Goal: $d$'s doors closed\\[2mm]
+    \textcolor{operationTeal}{\textbf{linear decomposition}}\\
+    1. $d$'s doors open\\
+    2. $d$'s doors open; $d$ within reach of $V$\\
+    3. $d$'s doors closed\\[2mm]
+    \textcolor{operationTeal}{\textbf{resolution}}\\
+    Source: state 2\\
+    Action: $V$ closes $d$'s doors\\
+    Target: state 3
+  };
+\end{tikzpicture}
+\end{document}

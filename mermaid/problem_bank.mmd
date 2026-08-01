@@ -1,0 +1,47 @@
+%% Reusable problem schemas, rendered independently from the scenario trace.
+flowchart LR
+  subgraph R1["R1 · relocate an object"]
+    direction TB
+    r1Params["Parameters<br/>E = object<br/>d = carrier"]
+    r1Problem["Problem<br/>Initial: E at *_1<br/>Goal: E at *_2"]
+    r1Decompose{{"linear decomposition"}}
+    r1States["Ordered states<br/>1. E at *_1<br/>2. d at *_1<br/>3. E in d<br/>4. E at *_2"]
+    r1Problem -.-> r1Decompose -.-> r1States
+  end
+
+  subgraph P6["P6 · move an object with a carrier"]
+    direction TB
+    p6Params["Parameters<br/>E = object<br/>V = carrier"]
+    p6Problem["Problem<br/>Initial: L_E = *_1<br/>Goal: L_E = *_2"]
+    p6Decompose{{"linear decomposition"}}
+    p6States["Ordered states<br/>1. L_E = *_1<br/>2. L_E = *_1; L_V = L_E<br/>3. L_E = *_1; L_V = L_E; V connected to E<br/>4. L_E = *_1; L_V = L_E; V connected to E; safety check<br/>5. L_E = *_2"]
+    p6Resolve{{"resolution"}}
+    p6Wire["Source: L_E = *_1; L_V = L_E; V connected to E; safety check<br/>Action: V moves E from *_1 to *_2<br/>Target: L_E = *_2"]
+    p6Problem -.-> p6Decompose -.-> p6States
+    p6States -.-> p6Resolve -.-> p6Wire
+  end
+
+  subgraph P8["P8 · close a vehicle's doors"]
+    direction TB
+    p8Params["Parameters<br/>V = mover<br/>d = vehicle"]
+    p8Problem["Problem<br/>Initial: d's doors open<br/>Goal: d's doors closed"]
+    p8Decompose{{"linear decomposition"}}
+    p8States["Ordered states<br/>1. d's doors open<br/>2. d's doors open; d within reach of V<br/>3. d's doors closed"]
+    p8Resolve{{"resolution"}}
+    p8Wire["Source: d's doors open; d within reach of V<br/>Action: V closes d's doors<br/>Target: d's doors closed"]
+    p8Problem -.-> p8Decompose -.-> p8States
+    p8States -.-> p8Resolve -.-> p8Wire
+  end
+
+  classDef operation fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:1.5px;
+  classDef metadata fill:#f8fafc,stroke:#94a3b8,color:#334155;
+  classDef concept fill:#ffffff,stroke:#475569,color:#0f172a;
+  classDef result fill:#f0fdf4,stroke:#15803d,color:#14532d;
+
+  class r1Decompose,p6Decompose,p6Resolve,p8Decompose,p8Resolve operation;
+  class r1Params,p6Params,p8Params metadata;
+  class r1Problem,r1States,p6Problem,p6States,p8Problem,p8States concept;
+  class p6Wire,p8Wire result;
+  style R1 fill:#ffffff,stroke:#6d28d9,stroke-width:1.5px
+  style P6 fill:#ffffff,stroke:#6d28d9,stroke-width:1.5px
+  style P8 fill:#ffffff,stroke:#6d28d9,stroke-width:1.5px

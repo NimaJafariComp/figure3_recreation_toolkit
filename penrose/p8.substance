@@ -1,0 +1,37 @@
+Diagram P8
+
+Parameter V, d
+Mover(V)
+Vehicle(d)
+ParameterOf(V, P8)
+ParameterOf(d, P8)
+
+State problemOpen, problemClosed
+ProblemInitial(problemOpen)
+ProblemGoal(problemClosed)
+
+State decomposedOpen, decomposedReach, decomposedClosed
+DecompositionState(decomposedOpen)
+DecompositionState(decomposedReach)
+DecompositionState(decomposedClosed)
+First(decomposedOpen)
+Second(decomposedReach)
+Third(decomposedClosed)
+
+Operation decompose
+LinearDecomposition(decompose)
+Transforms(decompose, decomposedOpen)
+Transforms(decompose, decomposedReach)
+Transforms(decompose, decomposedClosed)
+
+State ready, closed
+ResolutionSource(ready)
+ResolutionTarget(closed)
+
+Operation resolve
+Resolution(resolve)
+Transforms(resolve, ready)
+Transforms(resolve, closed)
+
+Process closeDoors
+Wire(closeDoors, ready, closed)

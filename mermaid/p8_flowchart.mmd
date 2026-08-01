@@ -1,0 +1,44 @@
+%% P8 as a reusable definition and its resolved wiring diagram.
+flowchart TB
+  subgraph P8["P8 · close a vehicle's doors"]
+    direction TB
+
+    params["Parameters<br/>V = mover<br/>d = vehicle"]
+
+    subgraph Problem["Problem definition"]
+      direction LR
+      initial["Initial state<br/>d's doors open"]
+      goal["Goal state<br/>d's doors closed"]
+      initial ~~~ goal
+    end
+
+    decompose{{"linear decomposition"}}
+    orderedStates["Ordered states<br/><br/>1. d's doors open<br/><br/>2. d's doors open; d within reach of V<br/><br/>3. d's doors closed"]
+    resolve{{"resolution"}}
+
+    subgraph Wiring["Resolved wiring diagram"]
+      direction LR
+      ready["d's doors open<br/>d within reach of V"]
+      closed["d's doors closed"]
+      ready -->|"V closes d's doors"| closed
+    end
+
+    initial -.-> decompose
+    goal -.-> decompose
+    decompose -.-> orderedStates
+    orderedStates -.-> resolve
+    resolve -.-> ready
+  end
+
+  classDef state fill:#ffffff,stroke:#475569,color:#0f172a;
+  classDef operation fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:1.5px;
+  classDef params fill:#f8fafc,stroke:#94a3b8,color:#334155;
+  classDef summary fill:#f1f5f9,stroke:#64748b,color:#0f172a;
+
+  class initial,goal,ready,closed state;
+  class decompose,resolve operation;
+  class params params;
+  class orderedStates summary;
+  style P8 fill:#ffffff,stroke:#334155,stroke-width:1.5px
+  style Problem fill:#f8fafc,stroke:#cbd5e1
+  style Wiring fill:#f8fafc,stroke:#cbd5e1

@@ -1,0 +1,64 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usetikzlibrary{arrows.meta,backgrounds,calc,fit,positioning}
+\input{semantic_styles.tex}
+
+\begin{document}
+\begin{tikzpicture}[node distance=7mm]
+  \node[concept card,align=left] (params) {
+    \textbf{Parameters}\\
+    $V=\text{mover}$\\
+    $d=\text{vehicle}$
+  };
+
+  \node[state card,text width=42mm,below left=10mm and 8mm of params] (initial) {
+    \textbf{Initial state}\\
+    $d$'s doors open
+  };
+  \node[state card,text width=42mm,below right=10mm and 8mm of params] (goal) {
+    \textbf{Goal state}\\
+    $d$'s doors closed
+  };
+  \begin{scope}[on background layer]
+    \node[draw=lineGray,fill=panelGray,rounded corners=2mm,
+          fit=(initial)(goal),inner sep=4mm,
+          label={[font=\sffamily\small\bfseries,text=ink]above:Problem definition}] {};
+  \end{scope}
+
+  \coordinate (problem-center) at ($(initial)!0.5!(goal)$);
+  \node[operation card,below=13mm of problem-center] (decompose) {linear decomposition};
+  \node[summary card,text width=82mm,below=of decompose] (states) {
+    \textbf{Ordered states}\\[1mm]
+    1. $d$'s doors open\\[1mm]
+    2. $d$'s doors open; $d$ within reach of $V$\\[1mm]
+    3. $d$'s doors closed
+  };
+  \node[operation card,below=of states] (resolve) {resolution};
+
+  \node[state card,text width=47mm,below left=12mm and 5mm of resolve] (ready) {
+    $d$'s doors open\\
+    $d$ within reach of $V$
+  };
+  \node[state card,text width=38mm,right=16mm of ready] (closed) {
+    $d$'s doors closed
+  };
+  \node[section label,anchor=west] (wiring-heading)
+    at ($(ready.north west)+(-1mm,8mm)$) {Resolved wiring diagram};
+  \begin{scope}[on background layer]
+    \node[draw=lineGray,fill=panelGray,rounded corners=2mm,
+          fit=(wiring-heading)(ready)(closed),inner sep=5mm] {};
+  \end{scope}
+
+  \draw[meta edge] (initial) -- (decompose);
+  \draw[meta edge] (goal) -- (decompose);
+  \draw[meta edge] (decompose) -- (states);
+  \draw[meta edge] (states) -- (resolve);
+  \draw[meta edge] (resolve) -- (ready);
+  \draw[process edge] (ready) -- node[above,font=\sffamily\small] {$V$ closes $d$'s doors} (closed);
+
+  \node[font=\sffamily\large\bfseries,text=ink,above=9mm of params] {
+    P8 · close a vehicle's doors
+  };
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,23 @@
+type Diagram
+type State
+type Operation
+type Process
+type Parameter
+
+predicate ProblemInitial(State)
+predicate ProblemGoal(State)
+predicate DecompositionState(State)
+predicate First(State)
+predicate Second(State)
+predicate Third(State)
+predicate ResolutionSource(State)
+predicate ResolutionTarget(State)
+
+predicate LinearDecomposition(Operation)
+predicate Resolution(Operation)
+predicate Transforms(Operation, State)
+predicate Wire(Process, State, State)
+
+predicate Mover(Parameter)
+predicate Vehicle(Parameter)
+predicate ParameterOf(Parameter, Diagram)

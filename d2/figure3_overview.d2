@@ -1,0 +1,55 @@
+direction: down
+
+scenario: Grocery-delivery scenario {
+  grid-columns: 2
+  initial: |md
+    **Initial state**
+
+    groceries in shopping cart  
+    at location of market
+  |
+  goal: |md
+    **Goal state**
+
+    groceries at front door  
+    of the house
+  |
+}
+
+generalize-r1: generalize { shape: hexagon }
+r1: R1 { shape: package }
+specialize-r1: |md
+  **specialize**
+
+  `E = G_i`  
+  `d = C`
+| { shape: hexagon }
+transport: grocery_transport
+decompose: linear decomposition { shape: hexagon }
+subproblems: Transport subproblems
+generalize-p6: generalize subproblem { shape: hexagon }
+p6: P6 { shape: package }
+specialize-p6: |md
+  **specialize**
+
+  `V = M`  
+  `E = C`
+| { shape: hexagon }
+resolve-move: resolve { shape: hexagon }
+move: M moves C from *_0 to *_1
+generalize-p8: generalize subproblem { shape: hexagon }
+p8: P8 { shape: package }
+specialize-p8: |md
+  **specialize**
+
+  `V = M`  
+  `d = C`
+| { shape: hexagon }
+resolve-doors: resolve { shape: hexagon }
+close: M closes C's doors
+
+scenario.initial -> generalize-r1: { style.stroke-dash: 4 }
+scenario.goal -> generalize-r1: { style.stroke-dash: 4 }
+generalize-r1 -> r1 -> specialize-r1 -> transport -> decompose -> subproblems: { style.stroke-dash: 4 }
+subproblems -> generalize-p6 -> p6 -> specialize-p6 -> resolve-move -> move: { style.stroke-dash: 4 }
+move -> generalize-p8 -> p8 -> specialize-p8 -> resolve-doors -> close: { style.stroke-dash: 4 }

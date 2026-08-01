@@ -1,0 +1,22 @@
+%% Compact schema-bank card for P8. This view emphasizes meaning over geometry.
+block-beta
+  columns 2
+  title["P8 · close a vehicle's doors"]:2
+  params["Parameters<br/>V = mover<br/>d = vehicle"]:2
+  problem["Problem<br/>Initial: d's doors open<br/>Goal: d's doors closed"]:2
+  decomposition["Linear decomposition<br/>1. d's doors open<br/>2. d's doors open; d within reach of V<br/>3. d's doors closed"]:2
+  resolution["Resolution<br/>Source: state 2<br/>Action: V closes d's doors<br/>Target: state 3"]:2
+  source["d's doors open<br/>d within reach of V"]
+  target["d's doors closed"]
+
+  source --> target
+
+  classDef heading fill:#f5f3ff,stroke:#6d28d9,color:#4c1d95,stroke-width:1.5px;
+  classDef metadata fill:#f8fafc,stroke:#94a3b8,color:#334155;
+  classDef concept fill:#f1f5f9,stroke:#64748b,color:#0f172a;
+  classDef state fill:#ffffff,stroke:#475569,color:#0f172a;
+
+  class title heading
+  class params metadata
+  class problem,decomposition,resolution concept
+  class source,target state

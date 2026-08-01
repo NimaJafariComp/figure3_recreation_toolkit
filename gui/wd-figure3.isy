@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE ipestyle SYSTEM "ipe.dtd">
+<ipestyle name="wd-semantic-views">
+  <color name="ink" value="0.059 0.090 0.165"/>
+  <color name="mutedInk" value="0.278 0.333 0.412"/>
+  <color name="lineGray" value="0.796 0.835 0.882"/>
+  <color name="panelGray" value="0.973 0.980 0.988"/>
+  <color name="operationTeal" value="0.059 0.463 0.431"/>
+  <color name="schemaViolet" value="0.427 0.157 0.851"/>
+  <color name="resultGreen" value="0.082 0.502 0.239"/>
+  <pen name="cardPen" value="0.55"/>
+  <pen name="operationPen" value="0.75"/>
+  <pen name="processPen" value="0.90"/>
+  <dashstyle name="metaOperation" value="[4 3] 0"/>
+  <textsize name="caption" value="8"/>
+  <textsize name="body" value="10"/>
+  <textsize name="heading" value="13"/>
+</ipestyle>

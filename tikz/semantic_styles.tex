@@ -1,0 +1,86 @@
+\definecolor{ink}{HTML}{0F172A}
+\definecolor{mutedInk}{HTML}{475569}
+\definecolor{lineGray}{HTML}{CBD5E1}
+\definecolor{panelGray}{HTML}{F8FAFC}
+\definecolor{summaryGray}{HTML}{F1F5F9}
+\definecolor{operationTeal}{HTML}{0F766E}
+\definecolor{operationFill}{HTML}{ECFEFF}
+\definecolor{schemaViolet}{HTML}{6D28D9}
+\definecolor{schemaFill}{HTML}{F5F3FF}
+\definecolor{resultGreen}{HTML}{15803D}
+\definecolor{resultFill}{HTML}{F0FDF4}
+
+\tikzset{
+  state card/.style={
+    draw=mutedInk,
+    fill=white,
+    rounded corners=1.5mm,
+    line width=0.55pt,
+    font=\sffamily\small,
+    align=center,
+    inner sep=3mm,
+    text=ink
+  },
+  concept card/.style={
+    state card,
+    fill=panelGray
+  },
+  summary card/.style={
+    state card,
+    fill=summaryGray
+  },
+  operation card/.style={
+    draw=operationTeal,
+    fill=operationFill,
+    rounded corners=4mm,
+    line width=0.75pt,
+    font=\sffamily\small\bfseries,
+    align=center,
+    inner xsep=4mm,
+    inner ysep=2.2mm,
+    text=operationTeal
+  },
+  schema ref/.style={
+    draw=schemaViolet,
+    fill=schemaFill,
+    double=schemaViolet,
+    double distance=1pt,
+    rounded corners=1mm,
+    line width=0.65pt,
+    font=\sffamily\bfseries,
+    inner xsep=5mm,
+    inner ysep=2.5mm,
+    text=schemaViolet
+  },
+  result card/.style={
+    state card,
+    draw=resultGreen,
+    fill=resultFill,
+    text=resultGreen,
+    line width=0.75pt
+  },
+  bank card/.style={
+    draw=schemaViolet,
+    fill=white,
+    rounded corners=2mm,
+    line width=0.75pt,
+    inner sep=4mm,
+    text=ink
+  },
+  meta edge/.style={
+    -{Stealth[length=2mm]},
+    densely dashed,
+    draw=mutedInk,
+    line width=0.6pt
+  },
+  process edge/.style={
+    -{Stealth[length=2.2mm]},
+    draw=ink,
+    line width=0.85pt
+  },
+  section label/.style={
+    font=\sffamily\scriptsize\bfseries,
+    text=mutedInk,
+    align=left
+  }
+}

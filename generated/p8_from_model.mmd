@@ -1,0 +1,39 @@
+%% Generated from shared/figure3_model.yaml
+flowchart TB
+  subgraph SCHEMA["P8 · reusable problem schema"]
+    direction TB
+    params["Parameters<br/>V = mover<br/>d = vehicle"]
+    subgraph PROBLEM["Problem definition"]
+      direction LR
+      initial["Initial state<br/>d's doors open"]
+      final["Goal state<br/>d's doors closed"]
+      initial ~~~ final
+    end
+    decompose{{"linear decomposition"}}
+    decomposition["Ordered states<br/><br/>1. d's doors open<br/><br/>2. d's doors open<br/>d within reach of V<br/><br/>3. d's doors closed"]
+    initial -.-> decompose
+    final -.-> decompose
+    decompose -.-> decomposition
+    resolve{{"resolution"}}
+    subgraph WIRING["Resolved wiring diagram"]
+      direction LR
+      resolvedSource["d's doors open<br/>d within reach of V"]
+      resolvedTarget["d's doors closed"]
+      resolvedSource -->|"V closes d's doors"| resolvedTarget
+    end
+    decomposition -.-> resolve
+    resolve -.-> resolvedSource
+  end
+  classDef state fill:#ffffff,stroke:#475569,color:#0f172a,stroke-width:1px;
+  classDef operation fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:1.5px;
+  classDef metadata fill:#f8fafc,stroke:#94a3b8,color:#334155;
+  classDef summary fill:#f1f5f9,stroke:#64748b,color:#0f172a;
+  class initial,final state;
+  class decompose operation;
+  class params metadata;
+  class decomposition summary;
+  style SCHEMA fill:#ffffff,stroke:#334155,stroke-width:1.5px
+  style PROBLEM fill:#f8fafc,stroke:#cbd5e1
+  class resolve operation;
+  class resolvedSource,resolvedTarget state;
+  style WIRING fill:#f8fafc,stroke:#cbd5e1

@@ -1,0 +1,246 @@
+canvas {
+  width = 1000
+  height = 980
+}
+
+const {
+  color ink = rgba(0.059, 0.09, 0.165, 1.0)
+  color muted = rgba(0.278, 0.333, 0.412, 1.0)
+  color line = rgba(0.796, 0.835, 0.882, 1.0)
+  color panel = rgba(0.973, 0.98, 0.988, 1.0)
+  color summary = rgba(0.945, 0.961, 0.976, 1.0)
+  color operation = rgba(0.059, 0.463, 0.431, 1.0)
+  color operationFill = rgba(0.925, 0.996, 1.0, 1.0)
+  color clear = rgba(0.0, 0.0, 0.0, 0.0)
+  color white = rgba(1.0, 1.0, 1.0, 1.0)
+}
+
+forall Diagram diagram {
+  diagram.frame = Rectangle {
+    center: (0.0, 0.0)
+    width: 940.0
+    height: 920.0
+    strokeWidth: 2.0
+    strokeColor: const.muted
+    fillColor: const.white
+  }
+  diagram.title = Text {
+    center: (0.0, 425.0)
+    string: "P8 · close a vehicle's doors"
+    fontSize: "24px"
+    fontWeight: "700"
+    fillColor: const.ink
+  }
+  diagram.problemLabel = Text {
+    center: (0.0, 325.0)
+    string: "Problem definition"
+    fontSize: "18px"
+    fontWeight: "700"
+    fillColor: const.muted
+  }
+  diagram.decompositionLabel = Text {
+    center: (0.0, 60.0)
+    string: "Ordered states"
+    fontSize: "18px"
+    fontWeight: "700"
+    fillColor: const.muted
+  }
+  diagram.wiringLabel = Text {
+    center: (0.0, -300.0)
+    string: "Resolved wiring diagram"
+    fontSize: "18px"
+    fontWeight: "700"
+    fillColor: const.muted
+  }
+}
+
+forall Parameter parameter where Mover(parameter) {
+  parameter.card = Rectangle {
+    center: (325.0, 375.0)
+    width: 210.0
+    height: 52.0
+    strokeWidth: 1.0
+    strokeColor: const.line
+    fillColor: const.panel
+  }
+  parameter.label = Text {
+    center: (325.0, 375.0)
+    string: "V = mover"
+    fontSize: "16px"
+    fillColor: const.muted
+  }
+}
+
+forall Parameter parameter where Vehicle(parameter) {
+  parameter.label = Text {
+    center: (325.0, 350.0)
+    string: "d = vehicle"
+    fontSize: "16px"
+    fillColor: const.muted
+  }
+}
+
+forall State state where ProblemInitial(state) {
+  state.card = Rectangle {
+    center: (-230.0, 250.0)
+    width: 300.0
+    height: 88.0
+    strokeWidth: 1.5
+    strokeColor: const.muted
+    fillColor: const.white
+  }
+  state.label = Text {
+    center: (-230.0, 250.0)
+    string: "Initial state\n d's doors open"
+    fontSize: "17px"
+    fillColor: const.ink
+  }
+}
+
+forall State state where ProblemGoal(state) {
+  state.card = Rectangle {
+    center: (230.0, 250.0)
+    width: 300.0
+    height: 88.0
+    strokeWidth: 1.5
+    strokeColor: const.muted
+    fillColor: const.white
+  }
+  state.label = Text {
+    center: (230.0, 250.0)
+    string: "Goal state\n d's doors closed"
+    fontSize: "17px"
+    fillColor: const.ink
+  }
+}
+
+forall Operation operation where LinearDecomposition(operation) {
+  operation.card = Rectangle {
+    center: (0.0, 155.0)
+    width: 235.0
+    height: 48.0
+    strokeWidth: 1.5
+    strokeColor: const.operation
+    fillColor: const.operationFill
+  }
+  operation.label = Text {
+    center: (0.0, 155.0)
+    string: "linear decomposition"
+    fontSize: "17px"
+    fontWeight: "700"
+    fillColor: const.operation
+  }
+  operation.arrow = Line {
+    start: (0.0, 130.0)
+    end: (0.0, 95.0)
+    strokeWidth: 1.5
+    strokeColor: const.muted
+    strokeDasharray: "6,5"
+    endArrowhead: "straight"
+  }
+}
+
+forall State state where First(state) {
+  state.label = Text {
+    center: (0.0, 20.0)
+    string: "1. d's doors open"
+    fontSize: "17px"
+    fillColor: const.ink
+  }
+}
+
+forall State state where Second(state) {
+  state.label = Text {
+    center: (0.0, -20.0)
+    string: "2. d's doors open; d within reach of V"
+    fontSize: "17px"
+    fillColor: const.ink
+  }
+}
+
+forall State state where Third(state) {
+  state.label = Text {
+    center: (0.0, -60.0)
+    string: "3. d's doors closed"
+    fontSize: "17px"
+    fillColor: const.ink
+  }
+}
+
+forall Operation operation where Resolution(operation) {
+  operation.card = Rectangle {
+    center: (0.0, -145.0)
+    width: 140.0
+    height: 48.0
+    strokeWidth: 1.5
+    strokeColor: const.operation
+    fillColor: const.operationFill
+  }
+  operation.label = Text {
+    center: (0.0, -145.0)
+    string: "resolution"
+    fontSize: "17px"
+    fontWeight: "700"
+    fillColor: const.operation
+  }
+  operation.arrow = Line {
+    start: (0.0, -170.0)
+    end: (0.0, -235.0)
+    strokeWidth: 1.5
+    strokeColor: const.muted
+    strokeDasharray: "6,5"
+    endArrowhead: "straight"
+  }
+}
+
+forall State state where ResolutionSource(state) {
+  state.card = Rectangle {
+    center: (-220.0, -365.0)
+    width: 330.0
+    height: 82.0
+    strokeWidth: 1.5
+    strokeColor: const.muted
+    fillColor: const.white
+  }
+  state.label = Text {
+    center: (-220.0, -365.0)
+    string: "d's doors open\n d within reach of V"
+    fontSize: "17px"
+    fillColor: const.ink
+  }
+}
+
+forall State state where ResolutionTarget(state) {
+  state.card = Rectangle {
+    center: (280.0, -365.0)
+    width: 250.0
+    height: 82.0
+    strokeWidth: 1.5
+    strokeColor: const.muted
+    fillColor: const.white
+  }
+  state.label = Text {
+    center: (280.0, -365.0)
+    string: "d's doors closed"
+    fontSize: "17px"
+    fillColor: const.ink
+  }
+}
+
+forall Process process; State source; State target
+where Wire(process, source, target) {
+  process.arrow = Line {
+    start: (-54.0, -365.0)
+    end: (154.0, -365.0)
+    strokeWidth: 2.0
+    strokeColor: const.ink
+    endArrowhead: "straight"
+    endArrowheadSize: 1.2
+  }
+  process.label = Text {
+    center: (50.0, -338.0)
+    string: "V closes d's doors"
+    fontSize: "16px"
+    fillColor: const.ink
+  }
+}

@@ -1,0 +1,49 @@
+direction: down
+
+P8: P8 · close a vehicle's doors {
+  style.stroke-width: 2
+
+  params: |md
+    **Parameters**
+
+    `V = mover`  
+    `d = vehicle`
+  |
+
+  problem: Problem definition {
+    grid-columns: 2
+    initial: |md
+      **Initial state**
+
+      d's doors open
+    |
+    goal: |md
+      **Goal state**
+
+      d's doors closed
+    |
+  }
+
+  decompose: linear decomposition { shape: hexagon }
+  states: |md
+    **Ordered states**
+
+    1. d's doors open
+    2. d's doors open; d within reach of V
+    3. d's doors closed
+  |
+  resolve: resolution { shape: hexagon }
+
+  wiring: Resolved wiring diagram {
+    grid-columns: 2
+    source: d's doors open; d within reach of V
+    target: d's doors closed
+    source -> target: V closes d's doors
+  }
+
+  problem.initial -> decompose: { style.stroke-dash: 4 }
+  problem.goal -> decompose: { style.stroke-dash: 4 }
+  decompose -> states: { style.stroke-dash: 4 }
+  states -> resolve: { style.stroke-dash: 4 }
+  resolve -> wiring.source: { style.stroke-dash: 4 }
+}

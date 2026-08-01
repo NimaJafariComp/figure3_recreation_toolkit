@@ -1,0 +1,37 @@
+digraph ScenarioTrace {
+  graph [rankdir=TB, bgcolor="white", pad=0.25, nodesep=0.55, ranksep=0.5, fontname="Helvetica"];
+  node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#475569", fontcolor="#0F172A", fontname="Helvetica", fontsize=11, margin="0.16,0.10"];
+  edge [style=dashed, color="#334155", arrowsize=0.7];
+
+  subgraph cluster_scenario {
+    label="Grocery-delivery scenario";
+    color="#CBD5E1"; fillcolor="#F8FAFC"; style="rounded,filled";
+    initial [label="Initial state\ngroceries in shopping cart\nat location of market"];
+    goal [label="Goal state\ngroceries at front door\nof the house"];
+    { rank=same; initial; goal; }
+    initial -> goal [style=invis, weight=20];
+  }
+
+  generalize_r1 [shape=hexagon, label="generalize", fillcolor="#ECFEFF", color="#0F766E"];
+  r1 [shape=component, label="R1", fillcolor="#F5F3FF", color="#6D28D9"];
+  specialize_r1 [shape=hexagon, label="specialize\nE = G_i\nd = C", fillcolor="#ECFEFF", color="#0F766E"];
+  transport [label="grocery_transport", fillcolor="#F8FAFC"];
+  decompose [shape=hexagon, label="linear decomposition", fillcolor="#ECFEFF", color="#0F766E"];
+  subproblems [label="Transport subproblems", fillcolor="#F8FAFC"];
+  generalize_p6 [shape=hexagon, label="generalize subproblem", fillcolor="#ECFEFF", color="#0F766E"];
+  p6 [shape=component, label="P6", fillcolor="#F5F3FF", color="#6D28D9"];
+  specialize_p6 [shape=hexagon, label="specialize\nV = M\nE = C", fillcolor="#ECFEFF", color="#0F766E"];
+  resolve_move [shape=hexagon, label="resolve", fillcolor="#ECFEFF", color="#0F766E"];
+  move [label="M moves C from *_0 to *_1", fillcolor="#F0FDF4", color="#15803D"];
+  generalize_p8 [shape=hexagon, label="generalize subproblem", fillcolor="#ECFEFF", color="#0F766E"];
+  p8 [shape=component, label="P8", fillcolor="#F5F3FF", color="#6D28D9"];
+  specialize_p8 [shape=hexagon, label="specialize\nV = M\nd = C", fillcolor="#ECFEFF", color="#0F766E"];
+  resolve_doors [shape=hexagon, label="resolve", fillcolor="#ECFEFF", color="#0F766E"];
+  close [label="M closes C's doors", fillcolor="#F0FDF4", color="#15803D"];
+
+  initial -> generalize_r1;
+  goal -> generalize_r1;
+  generalize_r1 -> r1 -> specialize_r1 -> transport -> decompose -> subproblems;
+  subproblems -> generalize_p6 -> p6 -> specialize_p6 -> resolve_move -> move;
+  move -> generalize_p8 -> p8 -> specialize_p8 -> resolve_doors -> close;
+}

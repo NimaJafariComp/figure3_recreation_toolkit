@@ -1,0 +1,60 @@
+%% Scenario reasoning trace. Reusable definitions live in problem_bank.mmd.
+flowchart TB
+  subgraph SCENARIO["Grocery-delivery scenario"]
+    direction LR
+    source["Initial state<br/>groceries in shopping cart<br/>at location of market"]
+    goal["Goal state<br/>groceries at front door<br/>of the house"]
+    source ~~~ goal
+  end
+
+  generalizeR1{{"generalize"}}
+  r1[["R1"]]
+  specializeR1{{"specialize<br/>E = G_i<br/>d = C"}}
+  groceryTransport["grocery_transport"]
+  decompose{{"linear decomposition"}}
+  transportSubproblems["Transport subproblems"]
+
+  generalizeP6{{"generalize subproblem"}}
+  p6[["P6"]]
+  specializeP6{{"specialize<br/>V = M<br/>E = C"}}
+  resolveMove{{"resolve"}}
+  moveCar["M moves C from *_0 to *_1"]
+
+  generalizeP8{{"generalize subproblem"}}
+  p8[["P8"]]
+  specializeP8{{"specialize<br/>V = M<br/>d = C"}}
+  resolveDoors{{"resolve"}}
+  closeDoors["M closes C's doors"]
+
+  source -.-> generalizeR1
+  goal -.-> generalizeR1
+  generalizeR1 -.-> r1
+  r1 -.-> specializeR1
+  specializeR1 -.-> groceryTransport
+  groceryTransport -.-> decompose
+  decompose -.-> transportSubproblems
+
+  transportSubproblems -.-> generalizeP6
+  generalizeP6 -.-> p6
+  p6 -.-> specializeP6
+  specializeP6 -.-> resolveMove
+  resolveMove -.-> moveCar
+
+  moveCar -.-> generalizeP8
+  generalizeP8 -.-> p8
+  p8 -.-> specializeP8
+  specializeP8 -.-> resolveDoors
+  resolveDoors -.-> closeDoors
+
+  classDef state fill:#ffffff,stroke:#475569,color:#0f172a;
+  classDef operation fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:1.5px;
+  classDef schema fill:#f5f3ff,stroke:#6d28d9,color:#4c1d95,stroke-width:1.5px;
+  classDef result fill:#f0fdf4,stroke:#15803d,color:#14532d,stroke-width:1.5px;
+  classDef concept fill:#f8fafc,stroke:#64748b,color:#0f172a;
+
+  class source,goal state;
+  class generalizeR1,specializeR1,decompose,generalizeP6,specializeP6,resolveMove,generalizeP8,specializeP8,resolveDoors operation;
+  class r1,p6,p8 schema;
+  class moveCar,closeDoors result;
+  class groceryTransport,transportSubproblems concept;
+  style SCENARIO fill:#f8fafc,stroke:#cbd5e1

@@ -1,0 +1,44 @@
+digraph ProblemBank {
+  graph [rankdir=TB, bgcolor="white", pad=0.3, nodesep=0.6, ranksep=0.8, fontname="Helvetica", compound=true];
+  node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#475569", fontcolor="#0F172A", fontname="Helvetica", fontsize=10, margin="0.14,0.09"];
+  edge [style=dashed, color="#334155", arrowsize=0.65];
+
+  subgraph cluster_r1 {
+    label="R1 · relocate an object"; color="#6D28D9"; penwidth=1.4; margin=18;
+    r1_params [label="Parameters\nE = object\nd = carrier", fillcolor="#F8FAFC"];
+    r1_problem [label="Problem\nInitial: E at *_1\nGoal: E at *_2"];
+    r1_op [shape=hexagon, label="linear decomposition", fillcolor="#ECFEFF", color="#0F766E"];
+    r1_states [label="Ordered states\n1. E at *_1\n2. d at *_1\n3. E in d\n4. E at *_2", fillcolor="#F1F5F9"];
+    r1_problem -> r1_op -> r1_states;
+    r1_params -> r1_problem [style=invis, weight=20];
+    { rank=same; r1_params; r1_problem; r1_op; r1_states; }
+  }
+
+  subgraph cluster_p6 {
+    label="P6 · move an object with a carrier"; color="#6D28D9"; penwidth=1.4; margin=18;
+    p6_params [label="Parameters\nE = object\nV = carrier", fillcolor="#F8FAFC"];
+    p6_problem [label="Problem\nInitial: L_E = *_1\nGoal: L_E = *_2"];
+    p6_decompose [shape=hexagon, label="linear decomposition", fillcolor="#ECFEFF", color="#0F766E"];
+    p6_states [label="Ordered states\n1. L_E = *_1\n2. L_E = *_1; L_V = L_E\n3. L_E = *_1; L_V = L_E; V connected to E\n4. L_E = *_1; L_V = L_E; V connected to E; safety check\n5. L_E = *_2", fillcolor="#F1F5F9"];
+    p6_resolve [shape=hexagon, label="resolution", fillcolor="#ECFEFF", color="#0F766E"];
+    p6_wire [label="Source: state 4\nAction: V moves E from *_1 to *_2\nTarget: state 5", fillcolor="#F0FDF4", color="#15803D"];
+    p6_problem -> p6_decompose -> p6_states -> p6_resolve -> p6_wire;
+    p6_params -> p6_problem [style=invis, weight=20];
+    { rank=same; p6_params; p6_problem; p6_decompose; p6_states; p6_resolve; p6_wire; }
+  }
+
+  subgraph cluster_p8 {
+    label="P8 · close a vehicle's doors"; color="#6D28D9"; penwidth=1.4; margin=18;
+    p8_params [label="Parameters\nV = mover\nd = vehicle", fillcolor="#F8FAFC"];
+    p8_problem [label="Problem\nInitial: d's doors open\nGoal: d's doors closed"];
+    p8_decompose [shape=hexagon, label="linear decomposition", fillcolor="#ECFEFF", color="#0F766E"];
+    p8_states [label="Ordered states\n1. d's doors open\n2. d's doors open; d within reach of V\n3. d's doors closed", fillcolor="#F1F5F9"];
+    p8_resolve [shape=hexagon, label="resolution", fillcolor="#ECFEFF", color="#0F766E"];
+    p8_wire [label="Source: state 2\nAction: V closes d's doors\nTarget: state 3", fillcolor="#F0FDF4", color="#15803D"];
+    p8_problem -> p8_decompose -> p8_states -> p8_resolve -> p8_wire;
+    p8_params -> p8_problem [style=invis, weight=20];
+    { rank=same; p8_params; p8_problem; p8_decompose; p8_states; p8_resolve; p8_wire; }
+  }
+
+  r1_params -> p6_params -> p8_params [style=invis, weight=100];
+}

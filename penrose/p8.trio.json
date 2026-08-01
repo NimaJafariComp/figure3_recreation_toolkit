@@ -1,0 +1,6 @@
+{
+  "substance": "./p8.substance",
+  "style": ["./p8.style"],
+  "domain": "./wiring_diagram.domain",
+  "variation": "SemanticP8"
+}

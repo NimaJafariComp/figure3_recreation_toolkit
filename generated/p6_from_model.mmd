@@ -1,0 +1,39 @@
+%% Generated from shared/figure3_model.yaml
+flowchart TB
+  subgraph SCHEMA["P6 · reusable problem schema"]
+    direction TB
+    params["Parameters<br/>E = object<br/>V = carrier"]
+    subgraph PROBLEM["Problem definition"]
+      direction LR
+      initial["Initial state<br/>L_E = *_1"]
+      final["Goal state<br/>L_E = *_2"]
+      initial ~~~ final
+    end
+    decompose{{"linear decomposition"}}
+    decomposition["Ordered states<br/><br/>1. L_E = *_1<br/><br/>2. L_E = *_1<br/>L_V = L_E<br/><br/>3. L_E = *_1<br/>L_V = L_E<br/>V connected to E<br/><br/>4. L_E = *_1<br/>L_V = L_E<br/>V connected to E<br/>safety check<br/><br/>5. L_E = *_2"]
+    initial -.-> decompose
+    final -.-> decompose
+    decompose -.-> decomposition
+    resolve{{"resolution"}}
+    subgraph WIRING["Resolved wiring diagram"]
+      direction LR
+      resolvedSource["L_E = *_1<br/>L_V = L_E<br/>V connected to E<br/>safety check"]
+      resolvedTarget["L_E = *_2"]
+      resolvedSource -->|"V moves E from *_1 to *_2"| resolvedTarget
+    end
+    decomposition -.-> resolve
+    resolve -.-> resolvedSource
+  end
+  classDef state fill:#ffffff,stroke:#475569,color:#0f172a,stroke-width:1px;
+  classDef operation fill:#ecfeff,stroke:#0f766e,color:#134e4a,stroke-width:1.5px;
+  classDef metadata fill:#f8fafc,stroke:#94a3b8,color:#334155;
+  classDef summary fill:#f1f5f9,stroke:#64748b,color:#0f172a;
+  class initial,final state;
+  class decompose operation;
+  class params metadata;
+  class decomposition summary;
+  style SCHEMA fill:#ffffff,stroke:#334155,stroke-width:1.5px
+  style PROBLEM fill:#f8fafc,stroke:#cbd5e1
+  class resolve operation;
+  class resolvedSource,resolvedTarget state;
+  style WIRING fill:#f8fafc,stroke:#cbd5e1

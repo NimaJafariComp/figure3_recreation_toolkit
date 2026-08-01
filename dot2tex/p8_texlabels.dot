@@ -1,0 +1,39 @@
+digraph P8 {
+  graph [rankdir=TB, margin=0.08, pad=0.20, nodesep=0.70, ranksep=0.65];
+  node [shape=box, style="rounded", fontsize=10, margin="0.16,0.10"];
+  edge [fontsize=9, arrowsize=0.65];
+
+  subgraph cluster_p8 {
+    label="P8";
+    texlbl="\\textbf{$P_8$ · close a vehicle's doors}";
+    color="#475569";
+    penwidth=1.2;
+    margin=20;
+
+    params [label="Parameters V mover d vehicle",
+      texlbl="\\begin{tabular}{l}\\textbf{Parameters}\\\\$V=\\text{mover}$\\\\$d=\\text{vehicle}$\\end{tabular}"];
+    initial [label="Initial doors open",
+      texlbl="\\begin{tabular}{c}\\textbf{Initial state}\\\\$d$'s doors open\\end{tabular}"];
+    goal [label="Goal doors closed",
+      texlbl="\\begin{tabular}{c}\\textbf{Goal state}\\\\$d$'s doors closed\\end{tabular}"];
+    decompose [shape=hexagon, label="linear decomposition",
+      texlbl="\\textbf{linear decomposition}"];
+    states [label="Ordered states",
+      texlbl="\\begin{tabular}{l}\\textbf{Ordered states}\\\\1. $d$'s doors open\\\\2. $d$'s doors open; $d$ within reach of $V$\\\\3. $d$'s doors closed\\end{tabular}"];
+    resolve [shape=hexagon, label="resolution", texlbl="\\textbf{resolution}"];
+    source [label="Ready",
+      texlbl="\\begin{tabular}{c}$d$'s doors open\\\\$d$ within reach of $V$\\end{tabular}"];
+    target [label="Closed", texlbl="$d$'s doors closed"];
+
+    { rank=same; initial; goal; }
+    { rank=same; source; target; }
+    initial -> goal [style=invis, weight=20];
+    initial -> decompose [style=dashed];
+    goal -> decompose [style=dashed];
+    decompose -> states [style=dashed];
+    states -> resolve [style=dashed];
+    resolve -> source [style=dashed];
+    source -> target [label="close doors",
+      texlbl="\\textit{$V$ closes $d$'s doors}", penwidth=1.2];
+  }
+}

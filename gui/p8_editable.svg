@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+     width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .heading { font: 700 18px Arial, sans-serif; fill: #475569; }
+      .body { font: 18px Arial, sans-serif; fill: #0f172a; }
+      .small { font: 16px Arial, sans-serif; fill: #475569; }
+      .card { fill: #fff; stroke: #475569; stroke-width: 1.5; rx: 12; }
+      .panel { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; rx: 16; }
+      .summary { fill: #f1f5f9; stroke: #64748b; stroke-width: 1.5; rx: 12; }
+      .operation { fill: #ecfeff; stroke: #0f766e; stroke-width: 2; rx: 24; }
+      .operation-label { font: 700 18px Arial, sans-serif; fill: #0f766e; text-anchor: middle; }
+      .meta { fill: none; stroke: #475569; stroke-width: 1.7; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .process { fill: none; stroke: #0f172a; stroke-width: 2.2; marker-end: url(#arrow); }
+      .center { text-anchor: middle; }
+    </style>
+  </defs>
+
+  <g inkscape:groupmode="layer" inkscape:label="Header" id="header">
+    <text class="title center" x="600" y="52">P8 · close a vehicle's doors</text>
+    <rect class="panel" x="925" y="75" width="220" height="90"/>
+    <text class="heading" x="950" y="105">Parameters</text>
+    <text class="small" x="950" y="132">V = mover</text>
+    <text class="small" x="950" y="155">d = vehicle</text>
+  </g>
+
+  <g inkscape:groupmode="layer" inkscape:label="Problem definition" id="problem">
+    <rect class="panel" x="80" y="85" width="780" height="170"/>
+    <text class="heading center" x="470" y="118">Problem definition</text>
+    <rect class="card" x="145" y="145" width="275" height="75"/>
+    <text class="body center" x="282" y="176">Initial state</text>
+    <text class="small center" x="282" y="202">d's doors open</text>
+    <rect class="card" x="520" y="145" width="275" height="75"/>
+    <text class="body center" x="657" y="176">Goal state</text>
+    <text class="small center" x="657" y="202">d's doors closed</text>
+  </g>
+
+  <g inkscape:groupmode="layer" inkscape:label="Linear decomposition" id="decomposition">
+    <path class="meta" d="M470 255 L470 295"/>
+    <rect class="operation" x="335" y="300" width="270" height="54"/>
+    <text class="operation-label" x="470" y="334">linear decomposition</text>
+    <path class="meta" d="M470 354 L470 392"/>
+    <rect class="summary" x="230" y="398" width="480" height="190"/>
+    <text class="heading center" x="470" y="432">Ordered states</text>
+    <text class="body" x="270" y="475">1. d's doors open</text>
+    <text class="body" x="270" y="515">2. d's doors open; d within reach of V</text>
+    <text class="body" x="270" y="555">3. d's doors closed</text>
+  </g>
+
+  <g inkscape:groupmode="layer" inkscape:label="Resolution" id="resolution">
+    <path class="meta" d="M470 588 L470 625"/>
+    <rect class="operation" x="390" y="632" width="160" height="54"/>
+    <text class="operation-label" x="470" y="666">resolution</text>
+    <path class="meta" d="M470 686 L470 730"/>
+    <rect class="panel" x="80" y="735" width="1065" height="135"/>
+    <text class="heading center" x="612" y="765">Resolved wiring diagram</text>
+    <rect class="card" x="135" y="787" width="310" height="62"/>
+    <text class="small center" x="290" y="813">d's doors open</text>
+    <text class="small center" x="290" y="836">d within reach of V</text>
+    <rect class="card" x="810" y="787" width="270" height="62"/>
+    <text class="body center" x="945" y="825">d's doors closed</text>
+    <path class="process" d="M445 818 L798 818"/>
+    <text class="small center" x="620" y="802">V closes d's doors</text>
+  </g>
+</svg>

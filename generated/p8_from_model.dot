@@ -1,0 +1,33 @@
+digraph P8 {
+  graph [rankdir=TB, bgcolor="white", pad=0.25, nodesep=0.65, ranksep=0.6, fontname="Helvetica"];
+  node [shape=box, style="rounded,filled", fillcolor="#FFFFFF", color="#475569", fontcolor="#0F172A", fontname="Helvetica", fontsize=11, margin="0.16,0.10"];
+  edge [color="#334155", fontcolor="#334155", fontname="Helvetica", fontsize=10, arrowsize=0.7];
+  subgraph cluster_P8 {
+    label="P8 · reusable problem schema";
+    color="#334155"; penwidth=1.4; margin=22; fontname="Helvetica"; fontsize=14;
+    params [label="Parameters\nV = mover\nd = vehicle", fillcolor="#F8FAFC", color="#94A3B8"];
+    subgraph cluster_problem {
+      label="Problem definition"; color="#CBD5E1"; fillcolor="#F8FAFC"; style="rounded,filled";
+      initial [label="Initial state\nd's doors open"];
+      final [label="Goal state\nd's doors closed"];
+      { rank=same; initial; final; }
+      initial -> final [style=invis, weight=20];
+    }
+    params -> initial [style=invis, weight=10];
+    decompose [shape=hexagon, label="linear decomposition", fillcolor="#ECFEFF", color="#0F766E", fontcolor="#134E4A"];
+    decomposition [label="Ordered states\n\n1. d's doors open\n\n2. d's doors open\nd within reach of V\n\n3. d's doors closed", fillcolor="#F1F5F9", color="#64748B"];
+    initial -> decompose [style=dashed];
+    final -> decompose [style=dashed];
+    decompose -> decomposition [style=dashed];
+    resolve [shape=hexagon, label="resolution", fillcolor="#ECFEFF", color="#0F766E", fontcolor="#134E4A"];
+    subgraph cluster_wiring {
+      label="Resolved wiring diagram"; color="#CBD5E1"; fillcolor="#F8FAFC"; style="rounded,filled";
+      resolved_source [label="d's doors open\nd within reach of V"];
+      resolved_target [label="d's doors closed"];
+      resolved_source -> resolved_target [label="V closes d's doors", style=solid, penwidth=1.4];
+      { rank=same; resolved_source; resolved_target; }
+    }
+    decomposition -> resolve [style=dashed];
+    resolve -> resolved_source [style=dashed];
+  }
+}

@@ -1,0 +1,145 @@
+figure:
+  id: figure3
+  title: Grocery-delivery reasoning trace
+  aspect_ratio: 2.2
+  layers:
+    - main_trace
+    - reusable_schemas
+
+visual_grammar:
+  state:
+    meaning: configuration
+    required_content:
+      - state_label
+  process:
+    meaning: action connecting a source state to a target state
+    required_content:
+      - source
+      - action
+      - target
+  operation:
+    meaning: transformation between problems, schemas, or wiring diagrams
+    kinds:
+      - generalize
+      - specialize
+      - linear_decomposition
+      - resolution
+  schema:
+    meaning: reusable parameterized problem definition
+    required_content:
+      - identifier
+      - parameters
+      - problem
+      - decomposition
+  views:
+    scenario_trace:
+      contains:
+        - main_trace
+        - schema_references
+      excludes:
+        - full_schema_definitions
+    problem_bank:
+      contains:
+        - full_schema_definitions
+      excludes:
+        - scenario_placement
+    schema_detail:
+      contains:
+        - one_schema_definition
+        - resolved_wiring_when_available
+
+schemas:
+  P8:
+    parameters:
+      V: mover
+      d: vehicle
+    problem:
+      initial:
+        - id: open
+          label: "d's doors open"
+      final:
+        - id: closed
+          label: "d's doors closed"
+    decomposition:
+      states:
+        - id: p8_s0
+          label: "d's doors open"
+        - id: p8_s1
+          label: "d's doors open\nd within reach of V"
+        - id: p8_s2
+          label: "d's doors closed"
+    resolution:
+      source: p8_s1
+      target: p8_s2
+      action: "V closes d's doors"
+
+  P6:
+    parameters:
+      E: object
+      V: carrier
+    problem:
+      initial:
+        - id: at_1
+          label: "L_E = *_1"
+      final:
+        - id: at_2
+          label: "L_E = *_2"
+    decomposition:
+      states:
+        - id: p6_s0
+          label: "L_E = *_1"
+        - id: p6_s1
+          label: "L_E = *_1\nL_V = L_E"
+        - id: p6_s2
+          label: "L_E = *_1\nL_V = L_E\nV connected to E"
+        - id: p6_s3
+          label: "L_E = *_1\nL_V = L_E\nV connected to E\nsafety check"
+        - id: p6_s4
+          label: "L_E = *_2"
+    resolution:
+      source: p6_s3
+      target: p6_s4
+      action: "V moves E from *_1 to *_2"
+
+  R1:
+    parameters:
+      E: object
+      d: carrier
+    problem:
+      initial:
+        - id: e_at_1
+          label: "E at *_1"
+      final:
+        - id: e_at_2
+          label: "E at *_2"
+    decomposition:
+      states:
+        - id: r1_s0
+          label: "E at *_1"
+        - id: r1_s1
+          label: "d at *_1"
+        - id: r1_s2
+          label: "E in d"
+        - id: r1_s3
+          label: "E at *_2"
+
+main_trace:
+  initial_problem:
+    initial: "groceries in shopping cart\nat location of market"
+    final: "groceries at front door\nof the house"
+  operations:
+    - generalize: R1
+    - specialize:
+        E: G_i
+        d: C
+    - linear_decomposition: grocery_transport
+    - generalize_subproblem: P6
+    - specialize:
+        V: M
+        E: C
+    - resolve: "M moves C from *_0 to *_1"
+    - generalize_subproblem: P8
+    - specialize:
+        V: M
+        d: C
+    - resolve: "M closes C's doors"

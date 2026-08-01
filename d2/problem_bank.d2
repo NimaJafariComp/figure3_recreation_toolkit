@@ -1,0 +1,29 @@
+direction: right
+
+R1: R1 · relocate an object {
+  params: "Parameters\nE = object\nd = carrier"
+  problem: "Problem\nInitial: E at *_1\nGoal: E at *_2"
+  decompose: linear decomposition { shape: hexagon }
+  states: "Ordered states\n1. E at *_1\n2. d at *_1\n3. E in d\n4. E at *_2"
+  problem -> decompose -> states: { style.stroke-dash: 4 }
+}
+
+P6: P6 · move an object with a carrier {
+  params: "Parameters\nE = object\nV = carrier"
+  problem: "Problem\nInitial: L_E = *_1\nGoal: L_E = *_2"
+  decompose: linear decomposition { shape: hexagon }
+  states: "Ordered states\n1. L_E = *_1\n2. L_E = *_1; L_V = L_E\n3. L_E = *_1; L_V = L_E; V connected to E\n4. L_E = *_1; L_V = L_E; V connected to E; safety check\n5. L_E = *_2"
+  resolve: resolution { shape: hexagon }
+  wire: "Source: state 4\nAction: V moves E from *_1 to *_2\nTarget: state 5"
+  problem -> decompose -> states -> resolve -> wire: { style.stroke-dash: 4 }
+}
+
+P8: P8 · close a vehicle's doors {
+  params: "Parameters\nV = mover\nd = vehicle"
+  problem: "Problem\nInitial: d's doors open\nGoal: d's doors closed"
+  decompose: linear decomposition { shape: hexagon }
+  states: "Ordered states\n1. d's doors open\n2. d's doors open; d within reach of V\n3. d's doors closed"
+  resolve: resolution { shape: hexagon }
+  wire: "Source: state 2\nAction: V closes d's doors\nTarget: state 3"
+  problem -> decompose -> states -> resolve -> wire: { style.stroke-dash: 4 }
+}
